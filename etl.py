@@ -113,7 +113,7 @@ def main() -> None:
     pg_user = env("PG_USER")
     pg_password = env("PG_PASSWORD")
     pg_host = env("PG_HOST")
-    pg_port = env("PG_PORT")
+    pg_port = os.getenv('PG_PORT', '5432')
     pg_db = env("PG_DB")
     pg_table = env("PG_TABLE")
     pg_if_exists = "replace"
