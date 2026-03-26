@@ -22,7 +22,7 @@ import os
 import json
 import logging
 from typing import Optional
-
+from sqlalchemy.engine import URL
 import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
@@ -43,8 +43,15 @@ def env(key: str, default: Optional[str] = None) -> str:
         raise RuntimeError(f"Missing required environment variable: {key}")
     return val
 
-def build_pg_url(user: str, password: str, host: str, port: str, db: str) -> str:
-    return f"postgresql://{user}:{password}@{host}:{port}/{db}"
+def build_pg_url(user: str, password: str, host: str, port: str, db: str) -> URL:
+    return URL.create(
+        drivername="postgresql",
+        username=user,
+        password=password,
+        host=host,
+        port=int(port),
+        database=db
+    )
 
 # ─── Google Sheets ────────────────────────────────────────────────────────────
 def read_worksheet(sheet_id: str, worksheet: str, sa_json: str) -> pd.DataFrame:
