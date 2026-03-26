@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15
-    container_name: automate_DB
+    container_name: automate_db
     restart: always
     environment:
       POSTGRES_USER: user_admin
